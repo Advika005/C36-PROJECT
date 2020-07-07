@@ -1,8 +1,20 @@
+var database;
 var drawing = [];
 var pen = [];
+var firebase;
+var button;
 
 function setup(){
-    var canvas = createCanvas(500,500);
+    var canvas = createCanvas(800,500);
+
+     database = firebase.database();
+    
+
+    button = createButton('SAVE');
+
+    button.position(1100,550);
+    
+    
     canvas.mousePressed(start);
 }
 
@@ -28,8 +40,19 @@ function draw(){
         }
         endShape();
       }
+
+      button.mousePressed(function(){
+        var drawingRef = database.ref('savedDrawing');
+        var data = {
+          savedDrawing :drawing
+        }
+        drawingRef.push(data);
+
+      });
    
 }
+
+//function Database.ref.on()
 
 function start(){
     pen=[];
